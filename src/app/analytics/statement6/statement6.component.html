@@ -1,1 +1,16 @@
-<p>statement6 works!</p>
+<select class="mdb-select md-form">
+    <option>academic year</option>
+    <option *ngFor="let year of academicYear">{{year}}</option>
+   
+</select>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<select class="mdb-select md-form">
+    <option disabled>semester</option>
+    <option *ngFor="let y of academic">{{y}}</option>
+
+
+</select>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<button type= "button" class="btn btn-default">
+    <span class="glyphiocon glyphiocon-search"></span>Search 
+</button>
