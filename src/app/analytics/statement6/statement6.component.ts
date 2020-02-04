@@ -8,6 +8,7 @@ import { AnalyticsService } from '../analytics.service';
 })
 export class Statement6Component implements OnInit {
   academicYear:string[]=[];
+  terms:[];
   constructor(private analyticsService:AnalyticsService ) {
    }
 
@@ -15,10 +16,22 @@ export class Statement6Component implements OnInit {
       this.analyticsService.get_academics_years().subscribe(res=>
         {
           this.academicYear=res["year"];
-        
+          console.log(this.academicYear)
+
+    });
+      this.analyticsService.get_term().subscribe(term => {
+      this.terms = term.term;
+
+      console.log(this.terms);
     })
+
     }
+
+    onsubmit() {
+      console.log("ths is a function")
+    }
+
   }
-  
+
 
 

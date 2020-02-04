@@ -10,8 +10,14 @@ export class AnalyticsService {
   baseUrl=environment.baseUrl;
   constructor(private http:HttpClient) {
    }
+
    get_academics_years():Observable<any>{
      let url=`${this.baseUrl}academicyear`;
+     return this.http.get(url);
+   }
+
+   get_term():Observable<any>{
+     let url=`${this.baseUrl}term`;
      return this.http.get(url);
    }
 }
