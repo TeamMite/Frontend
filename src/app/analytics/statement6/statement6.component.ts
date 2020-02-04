@@ -26,9 +26,14 @@ export class Statement6Component implements OnInit {
     })
 
     }
+    clickMessage='';
 
-    onsubmit() {
-      console.log("ths is a function")
+      onsubmit() {
+        var year=(<HTMLInputElement>document.getElementById('year')).value;
+        var terms=(<HTMLInputElement>document.getElementById('term')).value;
+        
+      console.log(year)
+      console.log(terms)
     }
 
   }

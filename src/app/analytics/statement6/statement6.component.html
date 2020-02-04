@@ -1,16 +1,14 @@
 <select class="mdb-select md-form">
     <option>academic year</option>
-    <option *ngFor="let year of academicYear">{{year}}</option>
+    <option *ngFor="let year of academicYear" id="year">{{year}}</option>
 
 </select>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <select class="mdb-select md-form">
     <option disabled>semester</option>
-    <option *ngFor="let y of terms">{{y}}</option>
+    <option *ngFor="let y of terms" id="term">{{y}}</option>
 
 
 </select>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<button type= "button" class="btn btn-default" (click)="onsubmit()">
-    <span class="glyphiocon glyphiocon-search"></span>Search
-</button>
+<button class="btn btn-primary" (click)="onsubmit()">search</button>
