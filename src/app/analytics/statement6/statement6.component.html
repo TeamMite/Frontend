@@ -1,10 +1,12 @@
-<select class="mdb-select md-form">
-    <option>academic year</option>
+<div>
+    <h6 style="color:green;">&nbsp;&nbsp;&nbsp;year&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;term</h6>
+<select class="mdb-select md-form" (change)="form1($event)">
+    <option disabled>academic year</option>
     <option *ngFor="let year of academicYear" id="year">{{year}}</option>
 
 </select>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<select class="mdb-select md-form">
+&nbsp;&nbsp;&nbsp;
+<select class="mdb-select md-form" (change)="form2($event)">
     <option disabled>semester</option>
     <option *ngFor="let y of terms" id="term">{{y}}</option>
 
@@ -12,3 +14,4 @@
 </select>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <button class="btn btn-primary" (click)="onsubmit()">search</button>
+</div>
