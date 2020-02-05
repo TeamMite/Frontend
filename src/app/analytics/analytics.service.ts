@@ -20,4 +20,13 @@ export class AnalyticsService {
      let url=`${this.baseUrl}term`;
      return this.http.get(url);
    }
+   get_usn_by_email(email):Observable<any>{
+     let url=`${this.baseUrl}get-usn/${email}`;
+     return this.http.get(url)
+   }
+   get_placemnent_details(usn,term):Observable<any>{
+     let url=`${this.baseUrl}placement/${usn}/${term}`
+     console.log(url)
+     return this.http.get(url);
+   }
 }

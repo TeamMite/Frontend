@@ -9,9 +9,23 @@
 <select class="mdb-select md-form" (change)="form2($event)">
     <option disabled>semester</option>
     <option *ngFor="let y of terms" id="term">{{y}}</option>
-
-
 </select>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <button class="btn btn-primary" (click)="onsubmit()">search</button>
+</div>
+<div class="row">
+    <div *ngIf="offers && offers.length>0" class="w3-panel w3-panel w3-card">
+        <div *ngFor="let o of offers">
+            <mat-card class="placement-card">
+                <mat-card-header>
+                    <mat-card-title>Company:{{o[0]}}</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    Role: Software Engineer<br>
+                    Salary: {{o[1]}}
+                </mat-card-content>
+            </mat-card><br>
+        </div>
+
+    </div>
 </div>
