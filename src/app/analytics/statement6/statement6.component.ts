@@ -15,6 +15,7 @@ export class Statement6Component implements OnInit {
   offers:any[] = [];
   scores:any[]=[];
   isPlacementOn=false;
+  selectedyear:any;
   
 
   constructor(private analyticsService: AnalyticsService) {
@@ -40,24 +41,19 @@ export class Statement6Component implements OnInit {
     })
 
   }
-  year: string = "";
-  term: string = "";
+  
   placementdetails: [] = [];
-  form1(event: any) {
-    this.year = event.target.value;
-  }
-  form2(event: any) {
-    this.term = event.target.value;
-  }
+  
   onsubmit() {
     if(!this.isPlacementOn){
       this.getPlacementdetails()
       this.getScores()
+      console.log(this.selectedyear)
     }
     
   }
   getPlacementdetails(){
-    this.analyticsService.get_placemnent_details(this.usn, this.year).subscribe(res => {
+    this.analyticsService.get_placemnent_details(this.usn, this.selectedyear).subscribe(res => {
       let result = res["offers"];
       for(let res of result)
       {

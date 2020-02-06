@@ -7,6 +7,7 @@ import { Statement6Component } from './statement6/statement6.component';
 import { HttpClientModule } from '@angular/common/http';
 
 import {MatSelectModule,MatCardModule} from '@angular/material';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import {MatSelectModule,MatCardModule} from '@angular/material';
     AnalyticsRoutingModule,
     HttpClientModule,
     MatSelectModule,
-    MatCardModule
+    MatCardModule,
+    FormsModule
     
   ]
 })

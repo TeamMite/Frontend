@@ -1,20 +1,36 @@
-<div>
-    <h6 style="color:green;">
-        &nbsp;&nbsp;&nbsp;year&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;term
-    </h6>
-    <select class="mdb-select md-form" (change)="form1($event)">
-        <option disabled>academic year</option>
-        <option *ngFor="let year of academicYear" id="year">{{year}}</option>
+<div class="container">
+    <div class="row">
+        <div class="col-md-2">
+            <mat-label class="labels">Academic Year</mat-label>
+            <mat-select [(ngModel)]="selectedyear">
+                <mat-option *ngFor="let year of academicYear" [value]="year">{{year}}</mat-option>
+            </mat-select>
+        </div>
+        <div class="col-md-2">
+            <mat-label class="labels">Semesters</mat-label>
+            <mat-select name="term" multiple [(ngModel)]="term">
+                <mat-option *ngFor="let y of terms" [value]="term">
+                    Semester - {{y}}
+                </mat-option>
+            </mat-select>
 
-    </select>
-    &nbsp;&nbsp;&nbsp;
-    <select class="mdb-select md-form" (change)="form2($event)">
-        <option disabled>semester</option>
-        <option *ngFor="let y of terms" id="term">{{y}}</option>
-    </select>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <button class="btn btn-primary" (click)="onsubmit()">search</button>
-</div><br>
+        </div>
+
+        <div class="col-md-1">
+            <button class="btn btn-primary search search-btn" (click)="onsubmit();" [disabled]=clicked>
+                <i class="fa fa-search ml-0"></i> Search
+            </button>
+       </div>
+        <div class="col-md-6">
+
+        </div>
+        <!-- <div class="col-md-1">
+            <button class="back-button" (click)="back_()" *ngIf="chart_visibility" style="float: right; margin: 10px;">
+                <span class="fa fa-chevron-left"></span> Back</button>
+        </div> -->
+    </div>
+
+   
 
 <div class="row container" *ngIf="offers && offers.length>0">
     <hr>
@@ -22,7 +38,7 @@
 
 </div>
 <div class="row" *ngIf="offers && offers.length>0">
-    
+
     <div class="col-md-3" *ngFor="let o of offers">
         <mat-card>
             <mat-card-header>
@@ -43,7 +59,7 @@
 
 </div>
 <div class="row mt-6" *ngIf="scores && scores.length>0">
-  
+
     <div class="col-md-3" *ngFor="let s of scores">
         <mat-card>
             <mat-card-header>
