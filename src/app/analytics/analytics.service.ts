@@ -33,4 +33,17 @@ export class AnalyticsService {
      let url=`${this.baseUrl}${usn}/score`
      return this.http.get(url)
    }
+   get_dept_faculties(dept):Observable<any>{
+     let url=`${this.baseUrl}${dept}/dept`
+     return this.http.get(url)
+   }
+   get_all_depts():Observable<any>{
+     let url=`${this.baseUrl}dept`
+     return this.http.get(url)
+   }
+   get_emp_id(email):Observable<any>{
+     let url=`${this.baseUrl}${email}/empid`
+     return this.http.get(url)
+   }
+
 }

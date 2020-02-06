@@ -1,4 +1,4 @@
-<div class="container">
+<br><div class="container">
     <div class="row">
         <div class="col-md-2">
             <mat-label class="labels">Academic Year</mat-label>
@@ -14,6 +14,18 @@
                 </mat-option>
             </mat-select>
 
+        </div>
+        <div class="col-md-2" *ngIf="userRoles.includes('PRINICPAL')">
+            <mat-form-field>
+                <mat-label class="labels">
+                    Select Department
+                </mat-label>
+                <mat-select name="years" [(ngModel)]="selectDepartment">
+                    <mat-option *ngFor="let y of depts" [value]="y">
+                        {{y}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
         </div>
 
         <div class="col-md-1">
