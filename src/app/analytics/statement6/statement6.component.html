@@ -1,31 +1,58 @@
 <div>
-    <h6 style="color:green;">&nbsp;&nbsp;&nbsp;year&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;term</h6>
-<select class="mdb-select md-form" (change)="form1($event)">
-    <option disabled>academic year</option>
-    <option *ngFor="let year of academicYear" id="year">{{year}}</option>
+    <h6 style="color:green;">
+        &nbsp;&nbsp;&nbsp;year&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;term
+    </h6>
+    <select class="mdb-select md-form" (change)="form1($event)">
+        <option disabled>academic year</option>
+        <option *ngFor="let year of academicYear" id="year">{{year}}</option>
 
-</select>
-&nbsp;&nbsp;&nbsp;
-<select class="mdb-select md-form" (change)="form2($event)">
-    <option disabled>semester</option>
-    <option *ngFor="let y of terms" id="term">{{y}}</option>
-</select>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<button class="btn btn-primary" (click)="onsubmit()">search</button>
+    </select>
+    &nbsp;&nbsp;&nbsp;
+    <select class="mdb-select md-form" (change)="form2($event)">
+        <option disabled>semester</option>
+        <option *ngFor="let y of terms" id="term">{{y}}</option>
+    </select>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <button class="btn btn-primary" (click)="onsubmit()">search</button>
+</div><br>
+
+<div class="row container" *ngIf="offers && offers.length>0">
+    <hr>
+    <label>Placement Details</label>
+
 </div>
-<div class="row">
-    <div *ngIf="offers && offers.length>0" class="w3-panel w3-panel w3-card">
-        <div *ngFor="let o of offers">
-            <mat-card class="placement-card">
-                <mat-card-header>
-                    <mat-card-title>Company:{{o[0]}}</mat-card-title>
-                </mat-card-header>
-                <mat-card-content>
-                    Role: Software Engineer<br>
-                    Salary: {{o[1]}}
-                </mat-card-content>
-            </mat-card><br>
-        </div>
+<div class="row" *ngIf="offers && offers.length>0">
+    
+    <div class="col-md-3" *ngFor="let o of offers">
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>Company:{{o[0]}}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                Role: Software Engineer<br>
+                Salary: {{o[1]}}
+            </mat-card-content>
+        </mat-card>
+
+    </div>
+</div><br>
+
+<div class="row container" *ngIf="scores && scores.length>0">
+    <hr>
+    <label>Marks Details</label>
+
+</div>
+<div class="row mt-6" *ngIf="scores && scores.length>0">
+  
+    <div class="col-md-3" *ngFor="let s of scores">
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>Marks scored in {{s[0]}} is:</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                {{s[1]}}%
+            </mat-card-content>
+        </mat-card>
 
     </div>
 </div>

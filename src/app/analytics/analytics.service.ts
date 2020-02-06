@@ -29,4 +29,8 @@ export class AnalyticsService {
      console.log(url)
      return this.http.get(url);
    }
+   get_scores(usn):Observable<any>{
+     let url=`${this.baseUrl}${usn}/score`
+     return this.http.get(url)
+   }
 }

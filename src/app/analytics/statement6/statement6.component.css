@@ -1,5 +1,6 @@
-.row{
-    width: 20vh;
-    display: flex;
-
+hr {
+    border-color: #551212;
+};
+.mat-card{
+    background-color: aquamarine;
 }

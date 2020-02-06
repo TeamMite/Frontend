@@ -13,6 +13,9 @@ export class Statement6Component implements OnInit {
   email: string = "";
   user: any;
   offers:any[] = [];
+  scores:any[]=[];
+  isPlacementOn=false;
+  
 
   constructor(private analyticsService: AnalyticsService) {
   }
@@ -47,20 +50,36 @@ export class Statement6Component implements OnInit {
     this.term = event.target.value;
   }
   onsubmit() {
-    console.log(this.year)
-    console.log(this.term)
+    if(!this.isPlacementOn){
+      this.getPlacementdetails()
+      this.getScores()
+    }
+    
+  }
+  getPlacementdetails(){
     this.analyticsService.get_placemnent_details(this.usn, this.year).subscribe(res => {
       let result = res["offers"];
       for(let res of result)
       {
         this.offers.push([res['companyName'],res['salary']])
       }
-      console.log(res["offers"])
-      console.log(res)
-      console.log(this.placementdetails)
+     
     })
-
+    this.isPlacementOn=true;
   }
+  getScores(){
+    this.analyticsService.get_scores(this.usn).subscribe(res=>{
+      let result=res["scores"];
+      for(let res of result)
+      {
+        this.scores.push([res['qualification'],res['result']])
+    
+      }
+      console.log(this.scores)
+      
+    })}
+
+ 
 }
 
 
