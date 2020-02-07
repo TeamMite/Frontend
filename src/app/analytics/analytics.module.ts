@@ -6,8 +6,10 @@ import { AnalyticsComponent } from './analytics.component';
 import { Statement6Component } from './statement6/statement6.component';
 import { HttpClientModule } from '@angular/common/http';
 
+import { Ng2GoogleChartsModule } from "ng2-google-charts";
 import {MatSelectModule,MatCardModule} from '@angular/material';
 import { FormsModule } from '@angular/forms';
+import { from } from 'rxjs';
 
 
 @NgModule({
@@ -18,8 +20,8 @@ import { FormsModule } from '@angular/forms';
     HttpClientModule,
     MatSelectModule,
     MatCardModule,
-    FormsModule
-    
+    FormsModule,
+    Ng2GoogleChartsModule
   ]
 })
 export class AnalyticsModule { }

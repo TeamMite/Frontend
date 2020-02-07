@@ -8,7 +8,8 @@ import { AnalyticsService } from '../analytics.service';
 })
 export class Statement6Component implements OnInit {
   academicYear: string[] = [];
-  terms: [];
+  sems: [];
+  selectedSem:any;
   usn: string = "";
   email: string = "";
   user: any;
@@ -19,8 +20,9 @@ export class Statement6Component implements OnInit {
   userRoles: any[] = [];
   selectDepartment: any;
   faculties:any;
+  allFaculties:string[]=[];
   empID:any;
-  depts:any;
+  depts: string[]=[];
 
 
   constructor(private analyticsService: AnalyticsService) {
@@ -54,15 +56,17 @@ export class Statement6Component implements OnInit {
       this.analyticsService.get_all_depts().subscribe(res=>
         {
           this.depts=res["depts"]
+         let data = []
+        for (let a of this.depts) {
+          data.push(a)
+        }
+        this.depts=data
         })
     }
     this.analyticsService.get_term().subscribe(term => {
-      this.terms = term.term;
-
-      console.log(this.terms);
+      this.sems = term.term;
+      console.log(this.sems);
     });
-    
-
   }
 
   placementdetails: [] = [];
@@ -94,21 +98,18 @@ export class Statement6Component implements OnInit {
       let patt=new RegExp("[a-zA-Z]*");
       let res=patt.exec(str)
       this.selectDepartment=res[0]
-      this.analyticsService.get_dept_faculties(this.selectDepartment).subscribe(res=>
-        {
-          let f=res["facs"]
-          let data=[]
-          for(let a of f){
-            data.push(a)
-          }
-          this.faculties=data
-        })
-        console.log(this.faculties)
-
+      this.analyticsService.get_dept_faculties(this.selectDepartment).subscribe(res => {
+        let f = res["facs"]
+        console.log(f)
+        let data = []
+        for (let a of f) {
+          data.push(a)
+        }
+        this.faculties=data
+      })
     }
     else if (this.userRoles.includes("FACULTY")) {
 
-      //load
     }
 
 
@@ -130,7 +131,7 @@ export class Statement6Component implements OnInit {
         this.scores.push([res['qualification'], res['result']])
 
       }
-      console.log(this.scores)
+      console.log(this.scores) 
 
     })
   }

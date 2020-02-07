@@ -39,7 +39,7 @@ export class AnalyticsService {
    }
    get_all_depts():Observable<any>{
      let url=`${this.baseUrl}dept`
-     return this.http.get(url)
+     return this.http.get(url) 
    }
    get_emp_id(email):Observable<any>{
      let url=`${this.baseUrl}${email}/empid`

@@ -1,21 +1,26 @@
 <br><div class="container">
     <div class="row">
         <div class="col-md-2">
-            <mat-label class="labels">Academic Year</mat-label>
-            <mat-select [(ngModel)]="selectedyear">
-                <mat-option *ngFor="let year of academicYear" [value]="year">{{year}}</mat-option>
-            </mat-select>
-        </div>
+            <mat-form-field>
+                <mat-label class="labels">Academic Year</mat-label>
+                <mat-select [(ngModel)]="selectedyear">
+                    <mat-option *ngFor="let year of academicYear" [value]="year">{{year}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            </div>
         <div class="col-md-2">
-            <mat-label class="labels">Semesters</mat-label>
-            <mat-select name="term" multiple [(ngModel)]="term">
-                <mat-option *ngFor="let y of terms" [value]="term">
-                    Semester - {{y}}
-                </mat-option>
-            </mat-select>
+            <mat-form-field>
+
+                <mat-label class="labels">Semesters</mat-label>
+                <mat-select [(ngModel)]="selectedSem">
+                <mat-option *ngFor="let y of sems" [value]="y">
+                        {{y}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
 
         </div>
-        <div class="col-md-2" *ngIf="userRoles.includes('PRINICPAL')">
+        <div class="col-md-2" *ngIf="userRoles.includes('PRINCIPAL')">
             <mat-form-field>
                 <mat-label class="labels">
                     Select Department
@@ -33,7 +38,7 @@
                 <i class="fa fa-search ml-0"></i> Search
             </button>
        </div>
-        <div class="col-md-6">
+        <div class="col-md-5">
 
         </div>
         <!-- <div class="col-md-1">
@@ -41,7 +46,18 @@
                 <span class="fa fa-chevron-left"></span> Back</button>
         </div> -->
     </div>
-
+    <div class="row">
+        <div class="col-sm-2 faculty-list" *ngIf="userRoles.includes('HOD') || userRoles.includes('PRINCIPAL')">
+        <button class="mt-4 btn btn-primary btn-block button-change" *ngFor="let faculty of faculties" (click)="getEmpChart(faculty['employeeGivenId'])">{{faculty['name']}}</button>
+        </div>
+        <div class="col-sm-10">
+            <div *ngIf="firstLevelChart">
+                <p class="page-title"><b>{{title}}</b></p>
+                <google-chart [data]='firstLevelChart' (chartSelect)="second_level($event)">
+                </google-chart>
+            </div>
+        </div>
+    </div>
    
 
 <div class="row container" *ngIf="offers && offers.length>0">
