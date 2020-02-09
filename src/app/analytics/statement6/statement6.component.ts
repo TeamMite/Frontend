@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AnalyticsService } from '../analytics.service';
+import { ChartSelectEvent } from 'ng2-google-charts';
+import { GoogleChartInterface } from 'ng2-google-charts/google-charts-interfaces';
 
 @Component({
   selector: 'app-statement6',
@@ -9,7 +11,7 @@ import { AnalyticsService } from '../analytics.service';
 export class Statement6Component implements OnInit {
   academicYear: string[] = [];
   sems: [];
-  selectedSem:any;
+  selectedSem: any;
   usn: string = "";
   email: string = "";
   user: any;
@@ -19,10 +21,15 @@ export class Statement6Component implements OnInit {
   selectedyear: any;
   userRoles: any[] = [];
   selectDepartment: any;
-  faculties:any;
-  allFaculties:string[]=[];
-  empID:any;
-  depts: string[]=[];
+  faculties: any;
+  allFaculties: string[] = [];
+  empID: any;
+  depts: string[] = [];
+  selectedSubject: any;
+  showSpinner: boolean;
+  firstLevelChart : GoogleChartInterface;
+  chart_visibility: boolean;
+  title: string;
 
 
   constructor(private analyticsService: AnalyticsService) {
@@ -39,29 +46,27 @@ export class Statement6Component implements OnInit {
       console.log(this.academicYear)
 
     });
-    if(this.userRoles.includes("STUDENT")){
+    if (this.userRoles.includes("STUDENT")) {
       this.analyticsService.get_usn_by_email(this.user.user).subscribe(res => {
         this.usn = res["usn"];
         console.log("usn", this.usn)
       })
     }
-    else{
-      this.analyticsService.get_emp_id(this.email).subscribe(res=>
-        {
-          this.empID=res["empid"];
-          console.log("empID",this.empID)
-        })
+    else {
+      this.analyticsService.get_emp_id(this.email).subscribe(res => {
+        this.empID = res["empid"];
+        console.log("empID", this.empID)
+      })
     }
-    if(this.userRoles.includes("PRINCIPAL")){
-      this.analyticsService.get_all_depts().subscribe(res=>
-        {
-          this.depts=res["depts"]
-         let data = []
+    if (this.userRoles.includes("PRINCIPAL")) {
+      this.analyticsService.get_all_depts().subscribe(res => {
+        this.depts = res["depts"]
+        let data = []
         for (let a of this.depts) {
           data.push(a)
         }
-        this.depts=data
-        })
+        this.depts = data
+      })
     }
     this.analyticsService.get_term().subscribe(term => {
       this.sems = term.term;
@@ -88,16 +93,16 @@ export class Statement6Component implements OnInit {
         for (let a of f) {
           data.push(a)
         }
-        this.faculties=data
+        this.faculties = data
       })
       console.log(this.faculties)
 
     }
     else if (this.userRoles.includes("HOD")) {
-      let str=this.empID;
-      let patt=new RegExp("[a-zA-Z]*");
-      let res=patt.exec(str)
-      this.selectDepartment=res[0]
+      let str = this.empID;
+      let patt = new RegExp("[a-zA-Z]*");
+      let res = patt.exec(str)
+      this.selectDepartment = res[0]
       this.analyticsService.get_dept_faculties(this.selectDepartment).subscribe(res => {
         let f = res["facs"]
         console.log(f)
@@ -105,7 +110,7 @@ export class Statement6Component implements OnInit {
         for (let a of f) {
           data.push(a)
         }
-        this.faculties=data
+        this.faculties = data
       })
     }
     else if (this.userRoles.includes("FACULTY")) {
@@ -129,14 +134,57 @@ export class Statement6Component implements OnInit {
       let result = res["scores"];
       for (let res of result) {
         this.scores.push([res['qualification'], res['result']])
-
       }
-      console.log(this.scores) 
-
+      console.log(this.scores)
     })
   }
 
+  getEmpChart(empID){
+    
+  }
+  graph_data(data) {
+    this.showSpinner = false
+    this.chart_visibility = true
+    this.title = 'Course-wise Internal Marks %',
+      this.firstLevelChart = {
+        chartType: "ComboChart",
+        dataTable: data,
+        options: {
+          focusTarget: 'datum',
+          bar: { groupWidth: "20%" },
+          vAxis: {
+            title: "Percentage",
+          },
 
+          height: 800,
+          hAxis: {
+            title: "Courses",
+            titleTextStyle: {
+            }
+          },
+          chartArea: {
+            left: 80,
+            right: 100,
+            top: 100,
+          },
+          legend: {
+            position: "top",
+            alignment: "end"
+          },
+          seriesType: "bars",
+          colors: ["#d3ad5d", "#789d96"],
+          fontName: "Times New Roman",
+          fontSize: 13,
+        }
+
+      }
+  }
+  second_level(event: ChartSelectEvent) {
+    if (event.selectedRowValues[0]) {
+      this.selectedSubject = event.selectedRowValues[0]
+      
+    }
+  }
 }
 
 
