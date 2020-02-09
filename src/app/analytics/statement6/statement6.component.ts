@@ -24,6 +24,7 @@ export class Statement6Component implements OnInit {
   faculties: any;
   allFaculties: string[] = [];
   empID: any;
+  clicked : any
   depts: string[] = [];
   selectedSubject: any;
   showSpinner: boolean;
@@ -43,19 +44,19 @@ export class Statement6Component implements OnInit {
 
     this.analyticsService.get_academics_years().subscribe(res => {
       this.academicYear = res["year"];
-      console.log(this.academicYear)
+      //console.log(this.academicYear)
 
     });
     if (this.userRoles.includes("STUDENT")) {
       this.analyticsService.get_usn_by_email(this.user.user).subscribe(res => {
         this.usn = res["usn"];
-        console.log("usn", this.usn)
+        //console.log("usn", this.usn)
       })
     }
     else {
       this.analyticsService.get_emp_id(this.email).subscribe(res => {
         this.empID = res["empid"];
-        console.log("empID", this.empID)
+        //console.log("empID", this.empID)
       })
     }
     if (this.userRoles.includes("PRINCIPAL")) {
@@ -70,7 +71,7 @@ export class Statement6Component implements OnInit {
     }
     this.analyticsService.get_term().subscribe(term => {
       this.sems = term.term;
-      console.log(this.sems);
+      //console.log(this.sems);
     });
   }
 
@@ -81,21 +82,21 @@ export class Statement6Component implements OnInit {
       if (!this.isPlacementOn) {
         this.getPlacementdetails()
         this.getScores()
-        console.log(this.selectedyear)
+        //console.log(this.selectedyear)
       }
 
     }
     else if (this.userRoles.includes("PRINCIPAL")) {
       this.analyticsService.get_dept_faculties(this.selectDepartment).subscribe(res => {
         let f = res["facs"]
-        console.log(f)
+        //console.log(f)
         let data = []
         for (let a of f) {
           data.push(a)
         }
         this.faculties = data
       })
-      console.log(this.faculties)
+      //console.log(this.faculties)
 
     }
     else if (this.userRoles.includes("HOD")) {
@@ -105,7 +106,7 @@ export class Statement6Component implements OnInit {
       this.selectDepartment = res[0]
       this.analyticsService.get_dept_faculties(this.selectDepartment).subscribe(res => {
         let f = res["facs"]
-        console.log(f)
+        //console.log(f)
         let data = []
         for (let a of f) {
           data.push(a)
@@ -114,7 +115,7 @@ export class Statement6Component implements OnInit {
       })
     }
     else if (this.userRoles.includes("FACULTY")) {
-
+      this.getEmpChart(this.empID)
     }
 
 
@@ -135,17 +136,31 @@ export class Statement6Component implements OnInit {
       for (let res of result) {
         this.scores.push([res['qualification'], res['result']])
       }
-      console.log(this.scores)
+      //console.log(this.scores)
     })
   }
 
   getEmpChart(empID){
-    
+    console.log(empID)
+    let data = [["Subject","%X Marks","%XII Marks","%Placement"]]
+    let details = []
+    this.analyticsService.get_emp_subjects(empID,this.selectedyear,this.selectedSem).subscribe(res=>{
+      details = res['subs']
+    },
+    err=>{},
+    ()=>{
+      for(let d of details){
+        data.push([d["courseName"],d["xPercentage"],d["xiiPercentage"],d["placePercentage"]])
+      }
+      this.graph_data(data)
+    }
+    )
   }
   graph_data(data) {
+    console.log(data)
     this.showSpinner = false
     this.chart_visibility = true
-    this.title = 'Course-wise Internal Marks %',
+    this.title = 'Course-wise X&XII Marks vs Placement %',
       this.firstLevelChart = {
         chartType: "ComboChart",
         dataTable: data,

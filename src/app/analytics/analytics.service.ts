@@ -45,5 +45,9 @@ export class AnalyticsService {
      let url=`${this.baseUrl}${email}/empid`
      return this.http.get(url)
    }
+   get_emp_subjects(empid,term,sem):Observable<any>{
+     let url = `${this.baseUrl}emp/subs/${empid}/${term}/${sem}`
+     return this.http.get(url)
+   }
 
 }
