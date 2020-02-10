@@ -3,6 +3,7 @@ import { AnalyticsService } from '../analytics.service';
 import { ChartSelectEvent } from 'ng2-google-charts';
 import { GoogleChartInterface } from 'ng2-google-charts/google-charts-interfaces';
 
+declare var $:any;
 @Component({
   selector: 'app-statement6',
   templateUrl: './statement6.component.html',
@@ -31,6 +32,13 @@ export class Statement6Component implements OnInit {
   firstLevelChart : GoogleChartInterface;
   chart_visibility: boolean;
   title: string;
+  xPercentage;
+  xiiPercentage;
+  totalStudents;
+  placedStudents;
+  totalPositions;
+  selectedEmp : any;
+  graph_error = false;
 
 
   constructor(private analyticsService: AnalyticsService) {
@@ -87,6 +95,7 @@ export class Statement6Component implements OnInit {
 
     }
     else if (this.userRoles.includes("PRINCIPAL")) {
+      this.faculties = [];
       this.analyticsService.get_dept_faculties(this.selectDepartment).subscribe(res => {
         let f = res["facs"]
         //console.log(f)
@@ -141,7 +150,7 @@ export class Statement6Component implements OnInit {
   }
 
   getEmpChart(empID){
-    console.log(empID)
+    this.selectedEmp = empID
     let data = [["Subject","%X Marks","%XII Marks","%Placement"]]
     let details = []
     this.analyticsService.get_emp_subjects(empID,this.selectedyear,this.selectedSem).subscribe(res=>{
@@ -152,15 +161,21 @@ export class Statement6Component implements OnInit {
       for(let d of details){
         data.push([d["courseName"],d["xPercentage"],d["xiiPercentage"],d["placePercentage"]])
       }
+      if(data.length > 1)
+      {
       this.graph_data(data)
-    }
-    )
+      this.graph_error = false
+      }
+      else{
+        this.graph_error = true
+      }
+    })
   }
   graph_data(data) {
     console.log(data)
     this.showSpinner = false
     this.chart_visibility = true
-    this.title = 'Course-wise X&XII Marks vs Placement %',
+    this.title = 'Course-wise X & XII Marks vs Placement %',
       this.firstLevelChart = {
         chartType: "ComboChart",
         dataTable: data,
@@ -169,6 +184,8 @@ export class Statement6Component implements OnInit {
           bar: { groupWidth: "20%" },
           vAxis: {
             title: "Percentage",
+            maxValue : 100,
+            minValue : 0 
           },
 
           height: 800,
@@ -197,7 +214,26 @@ export class Statement6Component implements OnInit {
   second_level(event: ChartSelectEvent) {
     if (event.selectedRowValues[0]) {
       this.selectedSubject = event.selectedRowValues[0]
-      
+      console.log(this.selectedSubject)
+      let data = []
+      this.analyticsService.get_emp_sub_detail(this.selectedEmp,this.selectedyear,this.selectedSem,this.selectedSubject).subscribe(res=>{
+        data = res["sub"]
+      },
+      err=>{},
+      ()=>{
+        let d = data[0];
+        this.xPercentage = d['xPercentage']
+        this.xiiPercentage = d['xiiPercentage']
+        this.analyticsService.get_emp_sub_placement(this.selectedEmp,this.selectedSem,this.selectedSubject).subscribe(res=>{
+          this.totalStudents = res["numofStudent"]
+          this.placedStudents = res["placed"]
+          this.totalPositions = res["positions"]
+          $('#exampleModal').modal('toggle')
+        })
+      })
+    }
+    else if(this.selectedSubject){
+      $('#exampleModal').modal('toggle')
     }
   }
 }

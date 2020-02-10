@@ -49,5 +49,13 @@ export class AnalyticsService {
      let url = `${this.baseUrl}emp/subs/${empid}/${term}/${sem}`
      return this.http.get(url)
    }
+   get_emp_sub_detail(empid,term,sem,sub):Observable<any>{
+     let url = `${this.baseUrl}emp/sub/${empid}/${term}/${sem}/${sub}`
+     return this.http.get(url)
+   }
+   get_emp_sub_placement(empid,sem,sub):Observable<any>{
+     let url = `${this.baseUrl}emp/placement/${empid}/${sem}/${sub}`
+     return this.http.get(url)
+   }
 
 }
