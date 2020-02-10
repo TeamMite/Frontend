@@ -48,9 +48,15 @@
         </div> -->
     </div>
     <div class="row">
-        <div class="col-sm-2 faculty-list" *ngIf="userRoles.includes('HOD') || userRoles.includes('PRINCIPAL')">
-            <button class="mt-4 btn btn-primary btn-block button-change" *ngFor="let faculty of faculties"
-                (click)="getEmpChart(faculty['employeeGivenId'])">{{faculty['name']}}</button>
+       
+        <div class="col-sm-2 faculty-list"  *ngIf="userRoles.includes('HOD') || userRoles.includes('PRINCIPAL')">
+            <div class="sc">
+                <div class="mt-3 mb-3" *ngIf="faculties && faculties.length>0">Faculty</div>
+                <div class="">
+                    <button class="mt-4 btn btn-default btn-block button-change" *ngFor="let faculty of faculties"
+                    (click)="getEmpChart(faculty['employeeGivenId'])">{{faculty['name']}}</button>
+                </div>
+            </div>
         </div>
         <div class="col-sm-10">
             <div *ngIf="firstLevelChart && !graph_error">
@@ -64,11 +70,9 @@
         </div>
     </div>
 
-
     <div class="row container" *ngIf="offers && offers.length>0">
         <hr>
         <label>Placement Details</label>
-
     </div>
     <div class="row" *ngIf="offers && offers.length>0">
 
@@ -101,12 +105,11 @@
                     {{s[1]}}%
                 </mat-card-content>
             </mat-card>
-
         </div>
     </div>
 
     <div exampleModal class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">

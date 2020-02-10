@@ -8,3 +8,10 @@ hr {
     border-left: 6px solid black;
     height: 500px;
   }
+  .sc{
+      margin-top: 30px;
+      max-height: 600px;      
+      overflow-x: hidden;
+      overflow-y: scroll;
+      scroll-behavior: smooth;
+  }

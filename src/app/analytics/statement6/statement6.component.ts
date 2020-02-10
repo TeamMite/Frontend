@@ -181,14 +181,14 @@ export class Statement6Component implements OnInit {
         dataTable: data,
         options: {
           focusTarget: 'datum',
-          bar: { groupWidth: "20%" },
+          bar: { groupWidth: "10%" },
           vAxis: {
             title: "Percentage",
             maxValue : 100,
             minValue : 0 
           },
 
-          height: 800,
+          height: 700,
           hAxis: {
             title: "Courses",
             titleTextStyle: {
