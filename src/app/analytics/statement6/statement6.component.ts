@@ -98,7 +98,7 @@ export class Statement6Component implements OnInit {
       this.faculties = [];
       this.analyticsService.get_dept_faculties(this.selectDepartment).subscribe(res => {
         let f = res["facs"]
-        //console.log(f)
+        
         let data = []
         for (let a of f) {
           data.push(a)
