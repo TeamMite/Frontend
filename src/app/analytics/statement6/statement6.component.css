@@ -15,3 +15,7 @@ hr {
       overflow-y: scroll;
       scroll-behavior: smooth;
   }
+  .text-center{
+      text-align: center;
+      
+  }

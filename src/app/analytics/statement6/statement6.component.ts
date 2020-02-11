@@ -39,6 +39,7 @@ export class Statement6Component implements OnInit {
   totalPositions;
   selectedEmp : any;
   graph_error = false;
+  searchStr: any;
 
 
   constructor(private analyticsService: AnalyticsService) {
@@ -104,6 +105,7 @@ export class Statement6Component implements OnInit {
           data.push(a)
         }
         this.faculties = data
+        this.allFaculties = this.faculties
       })
       //console.log(this.faculties)
 
@@ -121,6 +123,7 @@ export class Statement6Component implements OnInit {
           data.push(a)
         }
         this.faculties = data
+        this.allFaculties = this.faculties
       })
     }
     else if (this.userRoles.includes("FACULTY")) {
@@ -180,6 +183,7 @@ export class Statement6Component implements OnInit {
         chartType: "ComboChart",
         dataTable: data,
         options: {
+          //title:this.title,
           focusTarget: 'datum',
           bar: { groupWidth: "10%" },
           vAxis: {
@@ -195,7 +199,7 @@ export class Statement6Component implements OnInit {
             }
           },
           chartArea: {
-            left: 80,
+            left: 100,
             right: 100,
             top: 100,
           },
@@ -204,12 +208,27 @@ export class Statement6Component implements OnInit {
             alignment: "end"
           },
           seriesType: "bars",
-          colors: ["#d3ad5d", "#789d96"],
+          colors: ["#d3ad5d", "#789d96", "#781515"],
           fontName: "Times New Roman",
           fontSize: 13,
         }
 
       }
+  }
+  updateFacultyList(){
+    let fa = this.allFaculties
+    let newfa = []
+    var regex = new RegExp(`^${this.searchStr}.*`, "i"); 
+    for(let f of fa){
+      let rex = regex.test(f['name'])
+      console.log(rex)
+      if(rex){
+        newfa.push(f)
+      }
+    }
+    console.log(newfa)
+    this.faculties = newfa;
+    
   }
   second_level(event: ChartSelectEvent) {
     if (event.selectedRowValues[0]) {
