@@ -52,7 +52,7 @@ export class Statement6Component implements OnInit {
 
     this.analyticsService.get_academics_years().subscribe(res => {
       this.academicYear = res["year"];
-      //console.log(this.academicYear)
+      console.log(this.academicYear)
 
     });
     if (this.userRoles.includes("STUDENT")) {
@@ -79,7 +79,7 @@ export class Statement6Component implements OnInit {
     }
     this.analyticsService.get_term().subscribe(term => {
       this.sems = term.term;
-      //console.log(this.sems);
+      console.log(this.sems);
     });
   }
 
